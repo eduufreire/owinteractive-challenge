@@ -16,8 +16,8 @@ export class PrismaUser implements UserRepository {
 					updated_at: rawData.updated_at,
 				},
 			});
-		} catch(error) {
-			const e = error as Error
+		} catch (error) {
+			const e = error as Error;
 			throw new Error(e.message);
 		}
 	}
@@ -38,14 +38,14 @@ export class PrismaUser implements UserRepository {
 	}
 
 	async findByEmail(email: string): Promise<User | null> {
-		try {	
+		try {
 			return await this.client.user.findUnique({
 				where: {
-					email
-				}
-			})
-		} catch(error) {
-			const e = error as Error
+					email,
+				},
+			});
+		} catch (error) {
+			const e = error as Error;
 			throw new Error(e.message);
 		}
 	}

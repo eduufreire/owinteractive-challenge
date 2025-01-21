@@ -18,7 +18,6 @@ export class CreateUserUseCase implements UseCase {
 					birthday: data.birthday,
 				}),
 			);
-			console.log(result)
 			return UserMapper.toDTO(result);
 		} catch (error) {
 			console.log(error);
