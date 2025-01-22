@@ -1,11 +1,10 @@
 import { Request, Response, Router } from "express";
 import { createController } from "../use-cases/user/create";
-import UserMiddleware from "../middlewares/user-middleware";
+import UserMiddleware from "../utils/user-commons";
 
-const middleware = new UserMiddleware();
 const userRouter = Router();
 
-userRouter.post("/", middleware.validCreateUser, (request: Request, response: Response) => {
+userRouter.post("/", (request: Request, response: Response) => {
 	createController.handler(request, response);
 });
 
