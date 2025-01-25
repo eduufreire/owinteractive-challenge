@@ -22,19 +22,30 @@ export class PrismaUser implements UserRepository {
 		}
 	}
 
-	findAllOrdered(): Array<string> {
-		return [""];
+	async findAll(order?: "asc" | "desc"): Promise<Array<User>> {
+		try {
+			return await this.client.user.findMany({
+				orderBy: {
+					created_at: order ?? "desc"
+				}
+			})
+		} catch (error) {
+			const e = error as Error;
+			throw new Error(e.message);
+		}
 	}
 
-	findById(id: number): User {
-		return {
-			id: 1,
-			name: "",
-			email: "",
-			birthday: new Date(),
-			created_at: new Date(),
-			updated_at: new Date(),
-		};
+	async findById(id: number): Promise<User | null> {
+		try {
+			return await this.client.user.findUnique({
+				where: {
+					id,
+				},
+			});
+		} catch (error) {
+			const e = error as Error;
+			throw new Error(e.message);
+		}
 	}
 
 	async findByEmail(email: string): Promise<User | null> {
@@ -50,5 +61,15 @@ export class PrismaUser implements UserRepository {
 		}
 	}
 
-	deleteById(id: number): void {}
+	async deleteById(id: number): Promise<User | undefined> {
+		try {
+			return await this.client.user.delete({
+				where: {
+					id
+				}
+			})
+		} catch (error) {
+			console.log(error)
+		}
+	}
 }
