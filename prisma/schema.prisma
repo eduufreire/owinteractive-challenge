@@ -14,10 +14,22 @@ datasource db {
 }
 
 model User {
-  id Int @id @default(autoincrement())
-  name String
-  email String @unique
-  birthday DateTime
+  id         Int      @id @default(autoincrement())
+  name       String
+  email      String   @unique
+  birthday   DateTime
   created_at DateTime
   updated_at DateTime
+
+  transactions Transaction[]
+}
+
+model Transaction {
+  id         Int      @id @default(autoincrement())
+  type       String   @db.VarChar(20)
+  amount     Float  @db.Float()
+  created_at DateTime
+
+  user   User @relation(fields: [user_id], references: [id])
+  user_id Int
 }
