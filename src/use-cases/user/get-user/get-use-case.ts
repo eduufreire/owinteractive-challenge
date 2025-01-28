@@ -11,7 +11,7 @@ export class GetUserUseCase implements UseCase {
 
 			const user = await this.repository.findById(Number(id));
 
-			if (!user) throw Error("user not found");
+			if (!user) throw new Error("user not found");
 
 			return UserMapper.toDTO(user);
 		} catch (error) {

@@ -1,4 +1,4 @@
-import { CreateUserDTO, User } from "../../model/user";
+import { User } from "../../model/user";
 
 export default interface UserRepository {
 	save(rawData: Omit<User, "id">): Promise<User>;
