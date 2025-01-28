@@ -1,7 +1,7 @@
-import { CreateTransactionDTO, Transaction } from "../../model/transaction";
+import { CreateTransactionDTO, Transaction, TransactionUser } from "../../model/transaction";
 
 export interface TransactionRepository {
 	create(rawData: Omit<Transaction, "id">): Promise<Transaction>;
-	getAllByUser(userID: number): Promise<Array<Transaction> | undefined>;
-	// deleteById(id: number): Promise<Transaction>;
+	getAllByUser(userID: number): Promise<Array<TransactionUser>>;
+	deleteById(id: number): Promise<Transaction>;
 }

@@ -20,4 +20,16 @@ export default class TransactionCommons {
 
 		return result.data;
 	}
+
+	static validParamId(data: any): number {
+		const schema = z.object({
+			id: z.number(),
+		});
+		const result = schema.safeParse(data);
+		if (!result.success) {
+			console.log(result.error);
+			throw new Error("aa");
+		}
+		return data.id;
+	}
 }

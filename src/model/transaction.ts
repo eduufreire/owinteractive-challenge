@@ -9,7 +9,12 @@ export interface Transaction {
 	type: string;
 	amount: number;
 	created_at: Date;
+	status: boolean;
 	user_id: number;
+}
+
+export interface TransactionUser extends Transaction {
+	user: User;
 }
 
 export interface CreateTransactionDTO {
@@ -18,15 +23,31 @@ export interface CreateTransactionDTO {
 	amount: number;
 }
 
+export interface ListTransactionDTO {
+	id: number;
+	type: string;
+	amount: number;
+	created_at: string;
+}
+
 export default class TransactiomMapper {
 	private constructor() {}
 
-	static toPersistence(rawData: CreateTransactionDTO): Omit<Transaction, "id"> {
+	static toPersistence(rawData: CreateTransactionDTO): Omit<Transaction, "id" | "status"> {
 		return {
 			amount: rawData.amount,
 			type: rawData.type,
 			created_at: DateParse.getDateNow(),
 			user_id: rawData.user_id,
+		};
+	}
+
+	static toDTO(data: Transaction): ListTransactionDTO {
+		return {
+			id: data.id,
+			type: data.type,
+			amount: Number(data.amount.toFixed(2)),
+			created_at: DateParse.formatDate(data.created_at, true),
 		};
 	}
 }

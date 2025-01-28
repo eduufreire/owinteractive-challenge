@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from "express";
 import { Controller, UseCase } from "../../protocols";
 
-export class GetAllTransactionController implements Controller {
+export class DeleteTransactionController implements Controller {
 	constructor(private service: UseCase) {}
 
 	async handler(request: Request, response: Response, next?: NextFunction) {

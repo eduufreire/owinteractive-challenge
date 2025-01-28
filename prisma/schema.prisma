@@ -28,6 +28,7 @@ model Transaction {
   id         Int      @id @default(autoincrement())
   type       String   @db.VarChar(20)
   amount     Float  @db.Float()
+  status Boolean @default(true)
   created_at DateTime
 
   user   User @relation(fields: [user_id], references: [id])

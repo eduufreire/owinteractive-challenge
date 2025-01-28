@@ -1,11 +1,10 @@
 import { PrismaClient } from "@prisma/client";
-import { CreateTransactionDTO, Transaction } from "../../model/transaction";
+import { Transaction, TransactionUser } from "../../model/transaction";
 import { TransactionRepository } from "../database/transaction-repository";
-
 export class PrismaTransaction implements TransactionRepository {
 	constructor(private client: PrismaClient) {}
 
-	async create(rawData: Omit<Transaction, "id">): Promise<Transaction> {
+	async create(rawData: Omit<Transaction, "id" | "status">): Promise<Transaction> {
 		try {
 			return await this.client.transaction.create({
 				data: {
@@ -21,15 +20,31 @@ export class PrismaTransaction implements TransactionRepository {
 		}
 	}
 
-	// deleteById(id: number): Promise<Transaction> {
+	async deleteById(id: number): Promise<Transaction> {
+		try {
+			return await this.client.transaction.update({
+				data: {
+					status: false,
+				},
+				where: {
+					id,
+				},
+			});
+		} catch (error) {
+			console.log(error);
+			throw error;
+		}
+	}
 
-	// }
-
-	async getAllByUser(userID: number): Promise<Array<Transaction> | undefined> {
+	async getAllByUser(userID: number): Promise<Array<TransactionUser>> {
 		try {
 			return await this.client.transaction.findMany({
 				where: {
 					user_id: userID,
+					status: true,
+				},
+				orderBy: {
+					created_at: "desc",
 				},
 				include: {
 					user: true,
@@ -37,6 +52,7 @@ export class PrismaTransaction implements TransactionRepository {
 			});
 		} catch (error) {
 			console.log(error);
+			throw error;
 		}
 	}
 }
