@@ -5,4 +5,4 @@
 
 */
 -- AlterTable
-ALTER TABLE `transaction` MODIFY `amount` FLOAT NOT NULL;
+ALTER TABLE `Transaction` MODIFY `amount` FLOAT NOT NULL;

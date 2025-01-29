@@ -7,9 +7,12 @@ export class GetAllUserUseCase implements UseCase {
 
 	async execute(data: any): Promise<Array<ListUserDTO>> {
 		try {
-			const orderBy = data?.orderBy;
+			let { limit, offset } = data.query;
 
-			const users = await this.repository.findAll(orderBy);
+			if (!limit) limit = 5;
+			if (!offset) offset = 0;
+
+			const users = await this.repository.findAll(limit, offset);
 
 			// TODO: tratar o array vazio para nao lançar erro no mapper
 			return users.map(UserMapper.toDTO);

@@ -3,9 +3,10 @@
   "version": "1.0.0",
   "main": "src/server.ts",
   "scripts": {
-    "start": "node dist/index.js",
+    "start": "node dist/server.js",
     "dev": "tsx --watch src/server.ts",
-    "build": "tsc --build"
+    "build": "tsc --build",
+    "prisma_deploy": "prisma migrate deploy"
   },
   "author": "Eduardo Sousa",
   "license": "ISC",

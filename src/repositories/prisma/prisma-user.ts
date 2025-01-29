@@ -22,12 +22,14 @@ export class PrismaUser implements UserRepository {
 		}
 	}
 
-	async findAll(order?: "asc" | "desc"): Promise<Array<User>> {
+	async findAll(limit: number, offset: number): Promise<Array<User>> {
 		try {
 			return await this.client.user.findMany({
 				orderBy: {
-					created_at: order ?? "desc",
+					created_at: "desc",
 				},
+				take: Number(limit),
+				skip: Number(offset),
 			});
 		} catch (error) {
 			const e = error as Error;
