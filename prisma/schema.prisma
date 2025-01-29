@@ -6,6 +6,7 @@
 
 generator client {
   provider = "prisma-client-js"
+  binaryTargets = ["native", "linux-musl-openssl-3.0.x"]
 }
 
 datasource db {
@@ -14,12 +15,13 @@ datasource db {
 }
 
 model User {
-  id         Int      @id @default(autoincrement())
-  name       String
-  email      String   @unique
-  birthday   DateTime
-  created_at DateTime
-  updated_at DateTime
+  id              Int      @id @default(autoincrement())
+  name            String
+  email           String   @unique
+  birthday        DateTime
+  initial_balance Float    @db.Float() @default(0)
+  created_at      DateTime
+  updated_at      DateTime
 
   transactions Transaction[]
 }
@@ -27,10 +29,10 @@ model User {
 model Transaction {
   id         Int      @id @default(autoincrement())
   type       String   @db.VarChar(20)
-  amount     Float  @db.Float()
-  status Boolean @default(true)
+  amount     Float    @db.Float()
+  status     Boolean  @default(true)
   created_at DateTime
 
-  user   User @relation(fields: [user_id], references: [id])
+  user    User @relation(fields: [user_id], references: [id])
   user_id Int
 }

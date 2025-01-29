@@ -1,0 +1,24 @@
+services:
+  database:
+    image: mysql:8.0
+    volumes:
+      - api-desafio:/var/lib/mysql
+    ports:
+      - 127.0.0.1:3306:3306
+    environment:
+      MYSQL_ROOT: root
+      MYSQl_ROOT_PASSWORD: secret
+      MYSQL_DATABASE: db_desafio
+
+  api:
+    build: .
+    command: sh -c "npm run prisma_deploy & npm run start"
+    ports:
+      - 127.0.0.1:8080:8080
+    volumes:
+      - ./:/app
+    links:
+      - "database:database"
+
+volumes:
+  api-desafio:

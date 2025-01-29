@@ -1,2 +1,2 @@
 -- AlterTable
-ALTER TABLE `transaction` ADD COLUMN `status` BOOLEAN NOT NULL DEFAULT true;
+ALTER TABLE `Transaction` ADD COLUMN `status` BOOLEAN NOT NULL DEFAULT true;

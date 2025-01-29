@@ -1,6 +1,5 @@
 import TransactiomMapper, { CreateTransactionDTO } from "../../../model/transaction";
 import { TransactionRepository } from "../../../repositories/database/transaction-repository";
-import { DateParse } from "../../../utils/date";
 import TransactionCommons from "../../../utils/transaction-commons";
 import { UseCase } from "../../protocols";
 

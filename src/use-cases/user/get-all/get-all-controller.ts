@@ -6,7 +6,7 @@ export class GetAllUserController implements Controller {
 
 	async handler(request: Request, response: Response) {
 		try {
-			const result = await this.service.execute(request.query);
+			const result = await this.service.execute(request);
 			return response.status(201).json(result);
 		} catch (error) {
 			return response.send(error);

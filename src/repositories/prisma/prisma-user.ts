@@ -22,13 +22,15 @@ export class PrismaUser implements UserRepository {
 		}
 	}
 
-	async findAll(order?: "asc" | "desc"): Promise<Array<User>> {
+	async findAll(limit: number, offset: number): Promise<Array<User>> {
 		try {
 			return await this.client.user.findMany({
 				orderBy: {
-					created_at: order ?? "desc"
-				}
-			})
+					created_at: "desc",
+				},
+				take: Number(limit),
+				skip: Number(offset),
+			});
 		} catch (error) {
 			const e = error as Error;
 			throw new Error(e.message);
@@ -65,11 +67,27 @@ export class PrismaUser implements UserRepository {
 		try {
 			return await this.client.user.delete({
 				where: {
-					id
-				}
-			})
+					id,
+				},
+			});
 		} catch (error) {
-			console.log(error)
+			console.log(error);
+		}
+	}
+
+	async updateInitialBalance(userId: number, initialBalance: number): Promise<User> {
+		try {
+			return await this.client.user.update({
+				data: {
+					initial_balance: initialBalance,
+				},
+				where: {
+					id: userId,
+				},
+			});
+		} catch (error) {
+			console.log(error);
+			throw error;
 		}
 	}
 }
