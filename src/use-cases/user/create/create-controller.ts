@@ -9,7 +9,7 @@ export class CreateUserController implements Controller {
 			const result = await this.service.execute(request.body);
 			return response.status(201).json(result);
 		} catch (error) {
-			return response.send(error);
+			return response.status(500).json(error?.message);
 			// return response.status(error.status).json({
 			// 	message: error.message
 			// })

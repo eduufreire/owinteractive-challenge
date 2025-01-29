@@ -11,8 +11,15 @@ export class CreateUserUseCase implements UseCase {
 			const rawData: CreateUserDTO = UserCommons.validCreateUser(data);
 
 			const user = await this.repository.findByEmail(rawData.email);
-
 			if (user) throw Error("este usuario já existe");
+
+			const anoNascimento = new Date(data.birthday).getFullYear();
+			const idade = new Date().getFullYear() - anoNascimento;
+			console.log(idade);
+
+			if (idade < 18) {
+				throw new Error("muito novo");
+			}
 
 			const result = await this.repository.save(
 				UserMapper.toPersistence({

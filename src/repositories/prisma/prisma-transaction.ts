@@ -55,4 +55,21 @@ export class PrismaTransaction implements TransactionRepository {
 			throw error;
 		}
 	}
+
+	async getBalance(userId: number): Promise<any> {
+		try {
+			return await this.client.transaction.groupBy({
+				by: ["user_id"],
+				where: {
+					user_id: userId,
+				},
+				_sum: {
+					amount: true,
+				},
+			});
+		} catch (error) {
+			console.log(error);
+			throw error;
+		}
+	}
 }
